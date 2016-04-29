@@ -17,15 +17,27 @@ namespace RiotApp.Controllers
         
         public ChampionMastery GetMasteryInfo(string summonerId, string championId)
         {
-            var url = $"https://na.api.pvp.net/api/lol//championmastery/location/{_replaceable}/player/{summonerId}/champion/{championId}?api_key={_key}";
+            var url = $"https://na.api.pvp.net/api/lol/championmastery/location/{_replaceable}/player/{summonerId}/champion/{championId}?api_key={_key}";
             return CycleThroughRegionsAndReturnFirstResult<ChampionMastery>(url);
         }
 
         public Summoner GetSummonerInfo(string summonerName)
         {
             string formattedSummoner = summonerName.ToLower().Replace(" ", "").Trim();
-            var url = $"https://na.api.pvp.net/api/lol/{_replaceable}/v1.4/summoner/by-name/{formattedSummoner}";
+            var url = $"https://na.api.pvp.net/api/lol/{_replaceable}/v1.4/summoner/by-name/{formattedSummoner}?api_key={_key}";
             return CycleThroughRegionsAndReturnFirstResult<Summoner>(url);
+        }
+
+        public IEnumerable<Champion> GetAllChamps()
+        {
+            var url = $"https://na.api.pvp.net/api/lol/static-data/{_replaceable}/v1.2/champion?api_key={_key}";
+            return CycleThroughRegionsAndReturnFirstResult<List<Champion>>(url);
+        }
+
+        public Champion GetSpecificChamp(string championId)
+        {
+            var url = $"https://na.api.pvp.net/api/lol/static-data/{_replaceable}/v1.2/champion/{championId}?api_key={_key}&champData=all";
+            return CycleThroughRegionsAndReturnFirstResult<Champion>(url);
         }
 
         private T CycleThroughRegionsAndReturnFirstResult<T>(string url) where T : class, new()
@@ -34,7 +46,7 @@ namespace RiotApp.Controllers
             foreach (var region in _regions)
             {
                 var replacedurl = url.Replace(_replaceable, region);
-                var result = _client.GetAsync<T>(url).Result;
+                var result = _client.GetAsync<T>(replacedurl).Result;
                 if (result != null)
                 {
                     model = result;
