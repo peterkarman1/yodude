@@ -8,7 +8,7 @@ using RiotApp.Models;
 
 namespace RiotApp.Controllers
 {
-    public class ChampionMasteryController : ApiController
+    public class RiotController : ApiController
     {
         private readonly ApiClient _client = new ApiClient();
         private const string _key = "somekey";
