@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Web.Http;
-using System.Web.Mvc;
 using RiotApp.Models;
 
 namespace RiotApp.Controllers
@@ -11,32 +10,36 @@ namespace RiotApp.Controllers
     public class RiotController : ApiController
     {
         private readonly ApiClient _client = new ApiClient();
-        private const string _key = "somekey";
-        private string[] _regions = {"na","jp","ru"};
+        private const string Key = "somekey";
+        private readonly string[] _regions = {"na","jp","ru"};
         private string _replaceable = "replacemehomie";
-        
+
+        [HttpGet]
         public ChampionMastery GetMasteryInfo(string summonerId, string championId)
         {
-            var url = $"https://na.api.pvp.net/api/lol/championmastery/location/{_replaceable}/player/{summonerId}/champion/{championId}?api_key={_key}";
+            var url = $"https://na.api.pvp.net/api/lol/championmastery/location/{_replaceable}/player/{summonerId}/champion/{championId}?api_key={Key}";
             return CycleThroughRegionsAndReturnFirstResult<ChampionMastery>(url);
         }
 
+        [HttpGet]
         public Summoner GetSummonerInfo(string summonerName)
         {
             string formattedSummoner = summonerName.ToLower().Replace(" ", "").Trim();
-            var url = $"https://na.api.pvp.net/api/lol/{_replaceable}/v1.4/summoner/by-name/{formattedSummoner}?api_key={_key}";
+            var url = $"https://na.api.pvp.net/api/lol/{_replaceable}/v1.4/summoner/by-name/{formattedSummoner}?api_key={Key}";
             return CycleThroughRegionsAndReturnFirstResult<Summoner>(url);
         }
 
+        [HttpGet]
         public IEnumerable<Champion> GetAllChamps()
         {
-            var url = $"https://na.api.pvp.net/api/lol/static-data/{_replaceable}/v1.2/champion?api_key={_key}";
+            var url = $"https://na.api.pvp.net/api/lol/static-data/{_replaceable}/v1.2/champion?api_key={Key}";
             return CycleThroughRegionsAndReturnFirstResult<List<Champion>>(url);
         }
 
+        [HttpGet]
         public Champion GetSpecificChamp(string championId)
         {
-            var url = $"https://na.api.pvp.net/api/lol/static-data/{_replaceable}/v1.2/champion/{championId}?api_key={_key}&champData=all";
+            var url = $"https://na.api.pvp.net/api/lol/static-data/{_replaceable}/v1.2/champion/{championId}?api_key={Key}&champData=all";
             return CycleThroughRegionsAndReturnFirstResult<Champion>(url);
         }
 
