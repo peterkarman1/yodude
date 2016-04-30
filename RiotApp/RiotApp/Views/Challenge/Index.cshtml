@@ -1,17 +1,37 @@
 ﻿@{ ViewBag.Title = "Challenge!"; }
 
+<div id="getMasteryInfo" data-url="@Url.Action("GetMasteryInfo", "Riot", new { httproute = "DefaultApi" })"></div>
+<div id="getSummonerInfo" data-url="@Url.Action("GetSummonerInfo", "Riot", new { httproute = "DefaultApi" })"></div>
+<div id="getAllChamps" data-url="@Url.Action("GetAllChamps", "Riot", new { httproute = "DefaultApi" })"></div>
+<div id="getSpecificChamp" data-url="@Url.Action("GetSpecificChamp", "Riot", new { httproute = "DefaultApi" })"></div>
+
 <h2>Summoner Search</h2>
 <form id="summonerSearchForm">
-    <input type="text" id="summonerSearchText" style="color:black"/>
-    <input type="submit" id="summonerSearchSubmit" value="Search" style="color:black"/>
+    <input type="search" id="summonerSearchText"/>
+    <input type="submit" id="summonerSearchSubmit" value="Search" class="btn-success"/>
 </form>
+<div style="margin-top: 10px"></div>
+<div id="searchResult" style="display:none">
+    <div class="row">
+        <div class="col-md-3 col-sm-4 col-xs-12">
+            <label>Summoner Name</label>
+        </div>
+        <div class="col-md-3 col-sm-4 col-xs-12">
+            <label>Summoner Level</label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3 col-sm-4 col-xs-12">
+            <p id="summonerName"></p>
+        </div>
+        <div class="col-md-3 col-sm-4 col-xs-12">
+            <p id="summonerLevel"></p>
+        </div>
+    </div>
+</div>
+<div style="margin-top: 10px"></div>
 
 @section scripts {
     <script src="~/Scripts/challenge.js"></script>
     <script src="~/Scripts/riot-api-calls.js"></script>
 }
-
-<div id="getMasteryInfo" data-url="@Url.Action("GetMasteryInfo", "Riot", new { httproute = "DefaultApi" })"></div>
-<div id="getSummonerInfo" data-url="@Url.Action("GetSummonerInfo", "Riot", new { httproute = "DefaultApi" })"></div>
-<div id="getAllChamps" data-url="@Url.Action("GetAllChamps", "Riot", new { httproute = "DefaultApi" })"></div>
-<div id="getSpecificChamp" data-url="@Url.Action("GetSpecificChamp", "Riot", new { httproute = "DefaultApi" })"></div>

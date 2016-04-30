@@ -15,10 +15,10 @@ namespace RiotApp.Controllers
         private string _replaceable = "replacemehomie";
 
         [HttpGet]
-        public ChampionMastery GetMasteryInfo(string summonerId, string championId)
+        public List<ChampionMastery> GetMasteryInfo(string summonerId)
         {
-            var url = $"https://na.api.pvp.net/api/lol/championmastery/location/{_replaceable}/player/{summonerId}/champion/{championId}?api_key={Key}";
-            return CycleThroughRegionsAndReturnFirstResult<ChampionMastery>(url);
+            var url = $"https://na.api.pvp.net/api/lol/championmastery/location/{_replaceable}/player/{summonerId}/champions?api_key={Key}";
+            return CycleThroughRegionsAndReturnFirstResult<List<ChampionMastery>>(url);
         }
 
         [HttpGet]
