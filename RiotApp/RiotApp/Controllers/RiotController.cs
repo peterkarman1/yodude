@@ -11,7 +11,7 @@ namespace RiotApp.Controllers
     {
         private readonly ApiClient _client = new ApiClient();
         private const string Key = "somekey";
-        private readonly string[] _regions = {"na","jp","ru"};
+        private readonly string[] _regions = { "na", "jp", "ru" };
         private string _replaceable = "replacemehomie";
 
         [HttpGet]

@@ -4,7 +4,7 @@
         championId: championId
     };
     $.ajax({
-        url: '../api/Riot/GetMasteryInfo',
+        url: $("#getMasteryInfo").data("url"),
         type: 'GET',
         dataType: 'json',
         contentType: 'application/json; charset=utf-8',
@@ -19,8 +19,10 @@ function getSummonerInfo(summonerName) {
     var dataToSend = {
         summonerName: summonerName,
     };
+    console.log(dataToSend);
+    alert($("#getSummonerInfo").data("url"));
     $.ajax({
-        url: '../api/Riot/GetSummonerInfo',
+        url: $("#getSummonerInfo").data("url"),
         type: 'GET',
         dataType: 'json',
         contentType: 'application/json; charset=utf-8',
@@ -33,7 +35,7 @@ function getSummonerInfo(summonerName) {
 
 function getAllChamps() {
     $.ajax({
-        url: '../api/Riot/GetAllChamps',
+        url: $("#getAllChamps").data("url"),
         type: 'GET',
         dataType: 'json',
         contentType: 'application/json; charset=utf-8',
@@ -48,7 +50,7 @@ function getSpecificChamp(championId) {
         championId: championId
     };
     $.ajax({
-        url: '../api/Riot/GetSpecificChamp',
+        url: $("#getSpecificChamp").data("url"),
         type: 'GET',
         dataType: 'json',
         contentType: 'application/json; charset=utf-8',

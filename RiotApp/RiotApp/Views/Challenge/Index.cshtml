@@ -1,0 +1,17 @@
+﻿@{ ViewBag.Title = "Challenge!"; }
+
+<h2>Summoner Search</h2>
+<form id="summonerSearchForm">
+    <input type="text" id="summonerSearchText" style="color:black"/>
+    <input type="submit" id="summonerSearchSubmit" value="Search" style="color:black"/>
+</form>
+
+@section scripts {
+    <script src="~/Scripts/challenge.js"></script>
+    <script src="~/Scripts/riot-api-calls.js"></script>
+}
+
+<div id="getMasteryInfo" data-url="@Url.Action("GetMasteryInfo", "Riot", new { httproute = "DefaultApi" })"></div>
+<div id="getSummonerInfo" data-url="@Url.Action("GetSummonerInfo", "Riot", new { httproute = "DefaultApi" })"></div>
+<div id="getAllChamps" data-url="@Url.Action("GetAllChamps", "Riot", new { httproute = "DefaultApi" })"></div>
+<div id="getSpecificChamp" data-url="@Url.Action("GetSpecificChamp", "Riot", new { httproute = "DefaultApi" })"></div>
