@@ -19,10 +19,10 @@ namespace RiotApp
             {
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                HttpResponseMessage response = await client.GetAsync(url);
+                HttpResponseMessage response = client.GetAsync(new Uri(url)).Result;
                 if (response.IsSuccessStatusCode)
                 {
-                    string jsonString = await response.Content.ReadAsStringAsync();
+                    string jsonString = response.Content.ReadAsStringAsync().Result;
                     responseObject = JsonConvert.DeserializeObject<T>(jsonString);
                 }
                 else
