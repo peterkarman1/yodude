@@ -12,9 +12,9 @@ namespace RiotApp
 {
     public class ApiClient
     {
-        public  async Task<T> GetAsync<T>(string url) where T : class, new()
+        public  async Task<string> GetAsync(string url)
         {
-            var responseObject = new T();
+            var responseObject = "";
             using (var client = new HttpClient())
             {
                 client.DefaultRequestHeaders.Accept.Clear();
@@ -22,8 +22,8 @@ namespace RiotApp
                 HttpResponseMessage response = client.GetAsync(new Uri(url)).Result;
                 if (response.IsSuccessStatusCode)
                 {
-                    string jsonString = response.Content.ReadAsStringAsync().Result;
-                    responseObject = JsonConvert.DeserializeObject<T>(jsonString);
+                    responseObject= response.Content.ReadAsStringAsync().Result;
+                    
                 }
                 else
                 {
