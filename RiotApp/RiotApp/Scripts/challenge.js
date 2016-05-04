@@ -109,15 +109,11 @@ function showMasteries(data, championId) {
         $("#championName").html(getChampionName(championId));
         $("#championLevel").html(data.championLevel);
         $("#championPoints").html(data.championPoints);
-        $("#championPointsSinceLastLevel").html(data.championPointsSinceLastLevel);
-        $("#championPointsUntilNextLevel").html(data.championPointsUntilNextLevel);
         $("#lastPlayTime").html(new Date(data.lastPlayTime).toString());
     } else {
         $("#championName").html(getChampionName(championId));
         $("#championLevel").html("0");
         $("#championPoints").html("0");
-        $("#championPointsSinceLastLevel").html("0");
-        $("#championPointsUntilNextLevel").html("???");
         $("#lastPlayTime").html("Not played");
     }
 }
