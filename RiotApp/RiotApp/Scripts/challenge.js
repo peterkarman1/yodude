@@ -8,8 +8,15 @@ $(document).ready(function () {
         getSummonerInfo($("#summonerSearchText").val());
     });
 
-    $("body").on("click", ".champion", function () {
+    $("body").on("click", ".champion", function (e) {
+        e.preventDefault();
         getMasteryInfo($(this).prop("id"));
+    });
+
+    $("#backToChampionsList").on("click", function (e) {
+        e.preventDefault();
+        $("#champions").show();
+        $("#masteries").hide();
     });
 });
 
@@ -68,11 +75,13 @@ function showChampions(data) {
                 name: data.data[prop].name
             }
             champions.push(champion);
-            var masteryHtml = "<p id='" + champion.id + "' class='champion'>" + champion.name + "</p>";
+            var masteryHtml = "<div class='col-md-3' style='margin-top: 5px'><input type='submit' class='champion btn-primary' id='" + champion.id + "' value='" + champion.name + "'/></div>";
             championsHtml.push(masteryHtml);
         }
     }
-    $("#searchResult").after(championsHtml);
+    $("#champions").show();
+    $("#masteries").hide();
+    $("#champions").html(championsHtml);
 }
 
 function getMasteryInfo(championId) {
@@ -87,13 +96,37 @@ function getMasteryInfo(championId) {
         contentType: "application/json; charset=utf-8",
         data: dataToSend,
         success: function (data) {
-            showMasteries(data);
+            showMasteries(data, championId);
         }
     });
 }
 
-function showMasteries(data) {
-    alert(data);
-    data = JSON.parse(data);
-    alert(data);
+function showMasteries(data, championId) {
+    $("#champions").hide();
+    $("#masteries").show();
+    if (data.length) {
+        data = JSON.parse(data);
+        $("#championName").html(getChampionName(championId));
+        $("#championLevel").html(data.championLevel);
+        $("#championPoints").html(data.championPoints);
+        $("#championPointsSinceLastLevel").html(data.championPointsSinceLastLevel);
+        $("#championPointsUntilNextLevel").html(data.championPointsUntilNextLevel);
+        $("#lastPlayTime").html(new Date(data.lastPlayTime).toString());
+    } else {
+        $("#championName").html(getChampionName(championId));
+        $("#championLevel").html("0");
+        $("#championPoints").html("0");
+        $("#championPointsSinceLastLevel").html("0");
+        $("#championPointsUntilNextLevel").html("???");
+        $("#lastPlayTime").html("Not played");
+    }
+}
+
+function getChampionName(championId) {
+    for (var i = 0; i < champions.length; i++) {
+        if (champions[i].id == championId) {
+            return champions[i].name;
+        }
+    }
+    return "";
 }
