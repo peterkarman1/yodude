@@ -75,7 +75,10 @@ function showChampions(data) {
                 name: data.data[prop].name
             }
             champions.push(champion);
-            var masteryHtml = "<div class='col-md-3' style='margin-top: 5px'><input type='submit' class='champion btn-primary' id='" + champion.id + "' value='" + champion.name + "'/></div>";
+            var masteryHtml =
+                '<div class="col-md-3" style="margin-top: 5px">' +
+                    '<input type="submit" class="champion btn-primary" id="' + champion.id + '" value="' + champion.name + '"/>' +
+                '</div>';
             championsHtml.push(masteryHtml);
         }
     }
