@@ -10,7 +10,7 @@ namespace RiotApp.Controllers
     public class RiotController : ApiController
     {
         private readonly ApiClient _client = new ApiClient();
-        private const string Key = "61529e44-3d7b-4de5-b347-16eb4521d190";
+        private const string Key = "";
 
         private readonly string[] _regions = {"na","na1","jp","ru"};
         private string _replaceable = "replacemehomie";
@@ -49,6 +49,12 @@ namespace RiotApp.Controllers
         {
             var url = $"https://na.api.pvp.net/api/lol/static-data/{_replaceable}/v1.2/champion/{championId}?api_key={Key}&champData=all";
             return CycleThroughRegionsAndReturnFirstResult(url);
+        }
+
+        [HttpGet]
+        public System.Web.Mvc.ActionResult CheckSummoner(string summonerName) 
+        {
+            return null;
         }
 
         private string CycleThroughRegionsAndReturnFirstResult(string url)
