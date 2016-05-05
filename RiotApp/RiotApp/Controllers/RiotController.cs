@@ -1,13 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Web.Http;
+using System;
+using System.Globalization;
+using System.Linq;
+using System.Security.Claims;
+using System.Threading.Tasks;
+using System.Web;
+using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin.Security;
 using RiotApp.Models;
 
 namespace RiotApp.Controllers
 {
-    public class RiotController : ApiController
+    public class RiotController : Controller
     {
         private readonly ApiClient _client = new ApiClient();
         private readonly string[] _regions = {"na","na1","jp","ru"};
