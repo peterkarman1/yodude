@@ -10,9 +10,8 @@ namespace RiotApp.Controllers
     public class RiotController : ApiController
     {
         private readonly ApiClient _client = new ApiClient();
-        private const string Key = "";
-
         private readonly string[] _regions = {"na","na1","jp","ru"};
+        private const string Key = "key";
         private string _replaceable = "replacemehomie";
 
         [HttpGet]

@@ -5,33 +5,101 @@
 <div id="getAllChamps" data-url="@Url.Action("GetAllChamps", "Riot", new { httproute = "DefaultApi" })"></div>
 <div id="getSpecificChamp" data-url="@Url.Action("GetSpecificChamp", "Riot", new { httproute = "DefaultApi" })"></div>
 
-<h2>Summoner Search</h2>
-<form id="summonerSearchForm">
-    <input type="search" id="summonerSearchText"/>
-    <input type="submit" id="summonerSearchSubmit" value="Search" class="btn-success"/>
-</form>
-<div style="margin-top: 10px"></div>
-<div id="searchResult" style="display:none">
-    <div class="row">
-        <div class="col-md-3 col-sm-4 col-xs-12">
-            <label>Summoner Name</label>
-        </div>
-        <div class="col-md-3 col-sm-4 col-xs-12">
-            <label>Summoner Level</label>
-        </div>
+<div class="row" id="summonerSearch">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <h2>Summoner Search</h2>
+        <form id="summonerSearchForm">
+            <input type="search" id="summonerSearchText" style="color: black" />
+            <input type="submit" id="summonerSearchSubmit" value="Search" class="btn-info" />
+        </form>
     </div>
-    <div class="row">
-        <div class="col-md-3 col-sm-4 col-xs-12">
-            <p id="summonerName"></p>
+</div>
+<div class="row" id="searchResult" style="display: none">
+    <div style="margin-top: 10px"></div>
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="row">
+            <div class="col-md-3 col-sm-4 col-xs-12">
+                <label>Summoner Name</label>
+            </div>
+            <div class="col-md-3 col-sm-4 col-xs-12">
+                <label>Summoner Level</label>
+            </div>
         </div>
-        <div class="col-md-3 col-sm-4 col-xs-12">
-            <p id="summonerLevel"></p>
+        <div class="row">
+            <div class="col-md-3 col-sm-4 col-xs-12">
+                <p id="summonerName"></p>
+            </div>
+            <div class="col-md-3 col-sm-4 col-xs-12">
+                <p id="summonerLevel"></p>
+            </div>
         </div>
     </div>
 </div>
-<div style="margin-top: 10px"></div>
+<div class="row" id="champions" style="display: none">
+    <div style="margin-top: 10px"></div>
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <h2>Select a Champion</h2>
+    </div>
+    <div id="championsList"></div>
+</div>
+<div class="row" id="masteries" style="display: none">
+    <div style="margin-top: 10px"></div>
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <h2>Champion Mastery Info</h2>
+        <div class="row">
+            <div class="col-md-3 col-sm-3 col-xs-12">
+                <label>Champion</label>
+                <p id="championName"></p>
+            </div>
+            <div class="col-md-3 col-sm-3 col-xs-12">
+                <label>Mastery Level</label>
+                <p id="championLevel"></p>
+            </div>
+            <div class="col-md-3 col-sm-3 col-xs-12">
+                <label>Total Mastery Points</label>
+                <p id="championPoints"></p>
+            </div>
+            <div class="col-md-3 col-sm-3 col-xs-12">
+                <label>Last Played Date</label>
+                <p id="lastPlayTime"></p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3 col-sm-3 col-xs-12">
+                <input type="submit" id="challengeButton" value="Challenge!" class="btn-warning" />
+            </div>
+            <div class="col-md-3 col-sm-3 col-xs-12">
+                <input type="submit" id="backToChampionsList" value="Back To Champions List" class="btn-primary"/>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row" id="challenge" style="display: none">
+    <div style="margin-top: 10px"></div>
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <h2 id="challengeSummonerName"></h2>
+        <div class="row">
+            <div class="col-md-3 col-sm-3 col-xs-12">
+                <label>Challenge End Date</label>
+                <input type="text" class="datepicker" id="challengeEndDate" />
+            </div>
+            <div class="col-md-3 col-sm-3 col-xs-12">
+                <label>Challenge Champion Mastery Points</label>
+                <input type="text" id="challengePoints" />
+            </div>
+        </div>
+        <div style="margin-top: 10px"></div>
+        <div class="row">
+            <div class="col-md-3 col-sm-3 col-xs-12">
+                <input type="submit" id="challengeConfirmButton" value="" class="btn-danger" />
+            </div>
+            <div class="col-md-3 col-sm-3 col-xs-12">
+                <input type="submit" id="challengeBackButton" value="Back to Champion Mastery Info" class="btn-success" />
+            </div>
+        </div>
+    </div>
+</div>
 
 @section scripts {
     <script src="~/Scripts/challenge.js"></script>
-    <script src="~/Scripts/riot-api-calls.js"></script>
 }
