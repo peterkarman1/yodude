@@ -10,14 +10,15 @@ namespace RiotApp.Controllers
     public class RiotController : ApiController
     {
         private readonly ApiClient _client = new ApiClient();
-        private const string Key = "key";
-        private readonly string[] _regions = {"na","jp","ru"};
+        private const string Key = "61529e44-3d7b-4de5-b347-16eb4521d190";
+
+        private readonly string[] _regions = {"na","na1","jp","ru"};
         private string _replaceable = "replacemehomie";
 
         [HttpGet]
         public string GetMasteryInfo(string summonerId, string championId)
         {
-            var url = $"https://na.api.pvp.net/api/lol/championmastery/location/{_replaceable}/player/{summonerId}/champion/{championId}?api_key={Key}";
+            var url = $"https://na.api.pvp.net/championmastery/location/{_replaceable}/player/{summonerId}/champion/{championId}?api_key={Key}";
             return CycleThroughRegionsAndReturnFirstResult(url);
         }
 
@@ -26,6 +27,13 @@ namespace RiotApp.Controllers
         {
             string formattedSummoner = summonerName.ToLower().Replace(" ", "").Trim();
             var url = $"https://na.api.pvp.net/api/lol/{_replaceable}/v1.4/summoner/by-name/{formattedSummoner}?api_key={Key}";
+            return CycleThroughRegionsAndReturnFirstResult(url);
+        }
+
+        [HttpGet]
+        public string GetAllMasteryInfo(string summonerId)
+        {
+            var url = $"https://na.api.pvp.net/championmastery/location/{_replaceable}/player/{summonerId}/champions?api_key={Key}";
             return CycleThroughRegionsAndReturnFirstResult(url);
         }
 
@@ -50,7 +58,7 @@ namespace RiotApp.Controllers
             {
                 var replacedurl = url.Replace(_replaceable, region);
                 var result = _client.GetAsync(replacedurl).Result;
-                if (result != null)
+                if (!string.IsNullOrWhiteSpace(result))
                 {
                     model = result;
                     break;
