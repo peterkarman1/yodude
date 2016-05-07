@@ -1,8 +1,11 @@
 ﻿var summonerName;
 var summoner;
 var champions;
+var championsLoaded;
 
 $(document).ready(function () {
+    championsLoaded = false;
+
     $("#summonerSearchSubmit").on("click", function (e) {
         e.preventDefault();
         getSummonerInfo($("#summonerSearchText").val());
@@ -38,7 +41,8 @@ $(document).ready(function () {
 });
 
 function getSummonerInfo(name) {
-    $("#summonerSearchSubmit").prop("value", "Searching...");
+    $("#summonerSearchSubmit").removeClass("btn-info");
+    //$("#summonerSearchSubmit").addClass("btn-danger");
     $("#summonerSearchSubmit").prop("disabled", true);
     $("#searchResult").hide();
     summonerName = name;
@@ -60,12 +64,15 @@ function getSummonerInfo(name) {
 function showSummonerInfo(data) {
     //data = JSON.parse(data);
     summoner = data[summonerName];
-    $("#summonerSearchSubmit").prop("value", "Search");
+    //$("#summonerSearchSubmit").removeClass("btn-danger");
+    $("#summonerSearchSubmit").addClass("btn-info");
     $("#summonerSearchSubmit").prop("disabled", false);
     $("#summonerName").html(summoner.name);
     $("#summonerLevel").html(summoner.summonerLevel);
     $("#searchResult").show();
-    getChampions(summoner.id);
+    if (!championsLoaded) {
+        getChampions(summoner.id);
+    }
 }
 
 function getChampions() {
@@ -76,6 +83,7 @@ function getChampions() {
         contentType: "application/json; charset=utf-8",
         success: function (data) {
             showChampions(data);
+            championsLoaded = true;
         }
     });
 }
@@ -143,7 +151,7 @@ function showMasteries(data, championId) {
     $("#summonerSearch").hide();
     $("#champions").hide();
     $("#masteries").show();
-    if (data.length) {
+    if (typeof data != "undefined" && data != null) {
         //data = JSON.parse(data);
         $("#championName").html(getChampionName(championId));
         $("#championLevel").html(data.championLevel);
