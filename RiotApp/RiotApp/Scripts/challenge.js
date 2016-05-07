@@ -33,6 +33,8 @@ $(document).ready(function () {
         $("#masteries").show();
         $("#challenge").hide();
     });
+
+    $(".datepicker").datepicker();
 });
 
 function getSummonerInfo(name) {
@@ -56,7 +58,7 @@ function getSummonerInfo(name) {
 }
 
 function showSummonerInfo(data) {
-    data = JSON.parse(data);
+    //data = JSON.parse(data);
     summoner = data[summonerName];
     $("#summonerSearchSubmit").prop("value", "Search");
     $("#summonerSearchSubmit").prop("disabled", false);
@@ -79,7 +81,7 @@ function getChampions() {
 }
 
 function showChampions(data) {
-    data = JSON.parse(data);
+    //data = JSON.parse(data);
     champions = [];
     var championsHtml = [];
     for (var prop in data.data) {
@@ -142,7 +144,7 @@ function showMasteries(data, championId) {
     $("#champions").hide();
     $("#masteries").show();
     if (data.length) {
-        data = JSON.parse(data);
+        //data = JSON.parse(data);
         $("#championName").html(getChampionName(championId));
         $("#championLevel").html(data.championLevel);
         $("#championPoints").html(data.championPoints);

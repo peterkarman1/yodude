@@ -1,9 +1,13 @@
 ﻿@{ ViewBag.Title = "Challenge!"; }
 
-<div id="getMasteryInfo" data-url="@Url.Action("GetMasteryInfo", "Riot", new { httproute = "DefaultApi" })"></div>
+@*<div id="getMasteryInfo" data-url="@Url.Action("GetMasteryInfo", "Riot", new { httproute = "DefaultApi" })"></div>
 <div id="getSummonerInfo" data-url="@Url.Action("GetSummonerInfo", "Riot", new { httproute = "DefaultApi" })"></div>
 <div id="getAllChamps" data-url="@Url.Action("GetAllChamps", "Riot", new { httproute = "DefaultApi" })"></div>
-<div id="getSpecificChamp" data-url="@Url.Action("GetSpecificChamp", "Riot", new { httproute = "DefaultApi" })"></div>
+<div id="getSpecificChamp" data-url="@Url.Action("GetSpecificChamp", "Riot", new { httproute = "DefaultApi" })"></div>*@
+<div id="getMasteryInfo" data-url="@Url.Action("GetMasteryInfo", "Riot")"></div>
+<div id="getSummonerInfo" data-url="@Url.Action("GetSummonerInfo", "Riot")"></div>
+<div id="getAllChamps" data-url="@Url.Action("GetAllChamps", "Riot")"></div>
+<div id="getSpecificChamp" data-url="@Url.Action("GetSpecificChamp", "Riot")"></div>
 
 <div class="row" id="summonerSearch">
     <div class="col-md-12 col-sm-12 col-xs-12">
