@@ -58,11 +58,6 @@ namespace RiotApp.Controllers
             return CycleThroughRegionsAndReturnFirstResult(url);
         }
 
-        [HttpGet]
-        public System.Web.Mvc.ActionResult CheckSummoner(string summonerName) 
-        {
-            return null;
-        }
 
         private string CycleThroughRegionsAndReturnFirstResult(string url)
         {
