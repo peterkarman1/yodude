@@ -8,6 +8,7 @@ $(document).ready(function () {
 
     $("#summonerSearchSubmit").on("click", function (e) {
         e.preventDefault();
+        $("#searchAndChallenge").hide();
         getSummonerInfo($("#summonerSearchText").val());
     });
 

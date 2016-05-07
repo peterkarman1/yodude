@@ -128,12 +128,12 @@
             <h2 id="challengeSummonerName"></h2>
             <div class="row">
                 <div class="col-md-3 col-sm-3 col-xs-12">
-                    <h4>Challenge End Date</h4>
-                    <input type="text" class="datepicker form-control" id="challengeEndDate" style="color: black" />
+                    <h4>End Date</h4>
+                    <input type="text" class="datepicker form-control" id="challengeEndDate" style="color: black" value="@DateTime.Now.AddDays(3).ToShortDateString()" />
                 </div>
                 <div class="col-md-3 col-sm-3 col-xs-12">
-                    <h4>Challenge Champion Mastery Points</h4>
-                    <input type="text" id="challengePoints" style="color: black" value="5000" class="form-control" />
+                    <h4>Mastery Points</h4>
+                    <input type="text" id="challengePoints" style="color: black" value="2500" class="form-control" />
                 </div>
             </div>
             <div style="margin-top: 10px"></div>
