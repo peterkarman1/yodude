@@ -45,34 +45,35 @@
 
             <h4>Create a new account.</h4>
             <hr />
-            <div class="form-group">
+            <div class="form-group col-md-12">
                 @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
                 <div class="col-md-10">
                     @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
                 </div>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-12">
                 @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
                 <div class="col-md-10">
                     @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
                 </div>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-12">
                 <label class = "col-md-2 control-label" >Confirm Password</label>
                 <div class="col-md-10">
                     @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
                 </div>
             </div>
-            <div class="form-group">
+
+            <div class="form-group col-md-12">
                 <label class="col-md-2 control-label">Summoner Name</label>
                 <div class="col-md-10">
-                    @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                    @Html.TextBoxFor(m => m.Password, new { @class = "form-control", id="summonertext" })
                 </div>
             </div>
-            <div class="form-group">
-            <div class="text-warning">Summoner with that name already exists</div>
+            <div class="form-group col-md-12">
+            <div class="col-md-12 text-warning" style="display:none" id="existsAlready">Summoner with that name already exists</div>
                 <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" class="btn btn-default" value="Register" />
+                    <input type="submit" class="btn btn-default" value="Register" id="registerbtn" />
                 </div>
             </div>
         </section>
@@ -81,4 +82,13 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $("#registerbtn").click(function () {
+            if ($("#summonertext").val().toLowerCase() == "thepetek") {
+                $("#existsAlready").show();
+            } else {
+                window.location.href="@Url.Action("Index","Challenge")"
+            }
+        })
+    </script>
 }
