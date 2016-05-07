@@ -8,6 +8,7 @@ $(document).ready(function () {
 
     $("#summonerSearchSubmit").on("click", function (e) {
         e.preventDefault();
+        $("#searchAndChallenge").hide();
         getSummonerInfo($("#summonerSearchText").val());
     });
 
@@ -16,7 +17,7 @@ $(document).ready(function () {
         $("#challengeButton").show();
         getMasteryInfo($(this).prop("id"));
     });
-
+    
     $("#backToChampionsList").on("click", function (e) {
         e.preventDefault();
         $("#summonerSearch").show();
@@ -44,10 +45,11 @@ $(document).ready(function () {
     });
 });
 
+//GET
+
 function getSummonerInfo(name) {
-    $("#summonerSearchSubmit").removeClass("btn-info");
+    //$("#summonerSearchSubmit").removeClass("btn-info");
     $("#summonerSearchSubmit").prop("disabled", true);
-    $("#searchResult").hide();
     summonerName = name;
     var dataToSend = {
         summonerName: name
@@ -64,20 +66,20 @@ function getSummonerInfo(name) {
     });
 }
 
-function showSummonerInfo(data) {
-    //data = JSON.parse(data);
-    summoner = data[summonerName];
-    $("#summonerSearchSubmit").addClass("btn-info");
-    $("#summonerSearchSubmit").prop("disabled", false);
-    $("#summonerName").html(summoner.name);
-    $("#summonerLevel").html(summoner.summonerLevel);
-    $("#searchResult").show();
-    if (!championsLoaded) {
-        getChampions(summoner.id);
-    } else {
-        $("#champions").show();
-        $("#masteries").hide();
-    }
+function getAllMasteryInfo(summonerId) {
+    var dataToSend = {
+        summonerId: summonerId,
+    };
+    $.ajax({
+        url: $("#getAllMasteryInfo").data("url"),
+        type: "GET",
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        data: dataToSend,
+        success: function (data) {
+            showAllMasteryInfo(data);
+        }
+    });
 }
 
 function getChampions() {
@@ -91,6 +93,73 @@ function getChampions() {
             championsLoaded = true;
         }
     });
+}
+
+function getMasteryInfo(championId) {
+    var dataToSend = {
+        summonerId: summoner.id,
+        championId: championId
+    };
+    $.ajax({
+        url: $("#getMasteryInfo").data("url"),
+        type: "GET",
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        data: dataToSend,
+        success: function (data) {
+            showMasteries(data, championId);
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            alert(textStatus + "\n*****\n" + errorThrown);
+        }
+    });
+}
+
+function getChampionName(championId) {
+    for (var i = 0; i < champions.length; i++) {
+        if (champions[i].id == championId) {
+            return champions[i].name;
+        }
+    }
+    return "";
+}
+
+//SHOW
+
+function showSummonerInfo(data) {
+    //data = JSON.parse(data);
+    summoner = data[summonerName];
+
+    getAllMasteryInfo(summoner.id);
+
+    //$("#summonerSearchSubmit").addClass("btn-info");
+    $("#summonerSearchSubmit").prop("disabled", false);
+    $("#summonerName").html(summoner.name);
+    $("#summonerLevel").html(summoner.summonerLevel);
+    if (!championsLoaded) {
+        getChampions(summoner.id);
+    } else {
+        $("#champions").show();
+        $("#masteries").hide();
+    }
+}
+
+function showAllMasteryInfo(data) {
+    var totalPoints = 0;
+    var bestChampionId = -1;
+    var bestChampionPoints = 0;
+    for (var i = 0; i < data.length; i++) {
+        totalPoints += data[i].championPoints;
+        if (data[i].championPoints > bestChampionPoints) {
+            bestChampionId = data[i].championId;
+            bestChampionPoints = data[i].championPoints;
+        }
+    }
+    var bestChampionName = getChampionName(bestChampionId);
+    $("#bestChampion").html(bestChampionName);
+    $("#totalMasteryPoints").html(totalPoints);
+    $("#searchResult").show();
+    $("#searchAndChallenge").show();
 }
 
 function showChampions(data) {
@@ -115,22 +184,11 @@ function showChampions(data) {
         return 0;
     });
     for (var i = 0; i < champions.length; i++) {
-        var championHtml = '<div class="col-md-3" style="margin-top: 5px"><input type="submit" class="champion btn-';
-        switch (i % 4) {
-            case 0:
-                championHtml += "danger";
-                break;
-            case 1:
-                championHtml += "warning";
-                break;
-            case 2:
-                championHtml += "success";
-                break;
-            case 3:
-                championHtml += "primary";
-                break;
-        }
-        championHtml += '" id="' + champions[i].id + '" value="' + champions[i].name + '"/></div>';
+        var imageName = champions[i].name.replace("'", "").replace(".", "").replace("-", "").replace(" ", "");
+        var championHtml =
+            "<div class='col-md-2 col-sm-3 col-xs-6' style='margin-top: 5px; cursor: pointer'>" +
+                "<img src='/Content/Images/" + imageName + "_Square_0.png' class='champion' id='" + champions[i].id + "'/>" +
+            "</div>";
         championsHtml.push(championHtml);
     }
     $("#champions").show();
@@ -138,28 +196,7 @@ function showChampions(data) {
     $("#championsList").html(championsHtml);
 }
 
-function getMasteryInfo(championId) {
-    var dataToSend = {
-        summonerId: summoner.id,
-        championId: championId
-    };
-    $.ajax({
-        url: $("#getMasteryInfo").data("url"),
-        type: "GET",
-        dataType: "json",
-        contentType: "application/json; charset=utf-8",
-        data: dataToSend,
-        success: function (data) {
-            showMasteries(data, championId);
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-            alert(textStatus + "\n*****\n" + errorThrown);
-        }
-    });
-}
-
 function showMasteries(data, championId) {
-    $("#summonerSearch").hide();
     $("#champions").hide();
     $("#masteries").show();
     if (typeof data != "undefined" && data != null && typeof data.championId != "undefined") {
@@ -176,14 +213,7 @@ function showMasteries(data, championId) {
     }
 }
 
-function getChampionName(championId) {
-    for (var i = 0; i < champions.length; i++) {
-        if (champions[i].id == championId) {
-            return champions[i].name;
-        }
-    }
-    return "";
-}
+//SUBMIT
 
 function submitChallenge(summonerId, endDate, points) {
     var dataToSend = {
