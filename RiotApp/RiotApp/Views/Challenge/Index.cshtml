@@ -8,6 +8,7 @@
 <div id="getSummonerInfo" data-url="@Url.Action("GetSummonerInfo", "Riot")"></div>
 <div id="getAllChamps" data-url="@Url.Action("GetAllChamps", "Riot")"></div>
 <div id="getSpecificChamp" data-url="@Url.Action("GetSpecificChamp", "Riot")"></div>
+<div id="submitChallenge" data-url="@Url.Action("Submit", "Challenge")"></div>
 
 <div class="row" id="summonerSearch">
     <div class="col-md-12 col-sm-12 col-xs-12">
@@ -85,20 +86,17 @@
         <div class="row">
             <div class="col-md-3 col-sm-3 col-xs-12">
                 <label>Challenge End Date</label>
-                <input type="text" class="datepicker" id="challengeEndDate" />
+                <input type="text" class="datepicker" id="challengeEndDate" style="color: black" />
             </div>
             <div class="col-md-3 col-sm-3 col-xs-12">
                 <label>Challenge Champion Mastery Points</label>
-                <input type="text" id="challengePoints" />
+                <input type="text" id="challengePoints" style="color: black" value="5000"/>
             </div>
         </div>
         <div style="margin-top: 10px"></div>
         <div class="row">
             <div class="col-md-3 col-sm-3 col-xs-12">
                 <input type="submit" id="challengeConfirmButton" value="" class="btn-danger" />
-            </div>
-            <div class="col-md-3 col-sm-3 col-xs-12">
-                <input type="submit" id="challengeBackButton" value="Back to Champion Mastery Info" class="btn-success" />
             </div>
         </div>
     </div>

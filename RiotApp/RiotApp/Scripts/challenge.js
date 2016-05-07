@@ -13,6 +13,7 @@ $(document).ready(function () {
 
     $("body").on("click", ".champion", function (e) {
         e.preventDefault();
+        $("#challengeButton").show();
         getMasteryInfo($(this).prop("id"));
     });
 
@@ -21,28 +22,30 @@ $(document).ready(function () {
         $("#summonerSearch").show();
         $("#champions").show();
         $("#masteries").hide();
+        $("#challenge").hide();
     });
 
     $("#challengeButton").on("click", function (e) {
         e.preventDefault();
         $("#challengeSummonerName").html("Challenge " + summoner.name + "!");
         $("#challengeConfirmButton").prop("value", "Challenge " + summoner.name + "!");
-        $("#masteries").hide();
+        $("#challengeButton").hide();
         $("#challenge").show();
     });
 
-    $("#challengeBackButton").on("click", function (e) {
-        e.preventDefault();
-        $("#masteries").show();
-        $("#challenge").hide();
+    $(".datepicker").datepicker({
+        minDate: new Date()
     });
 
-    $(".datepicker").datepicker();
+    $("#challengeConfirmButton").on("click", function () {
+        var endDate = $("#challengeEndDate").val();
+        var points = $("#challengePoints").val();
+        submitChallenge(summoner.id, endDate, points);
+    });
 });
 
 function getSummonerInfo(name) {
     $("#summonerSearchSubmit").removeClass("btn-info");
-    //$("#summonerSearchSubmit").addClass("btn-danger");
     $("#summonerSearchSubmit").prop("disabled", true);
     $("#searchResult").hide();
     summonerName = name;
@@ -64,7 +67,6 @@ function getSummonerInfo(name) {
 function showSummonerInfo(data) {
     //data = JSON.parse(data);
     summoner = data[summonerName];
-    //$("#summonerSearchSubmit").removeClass("btn-danger");
     $("#summonerSearchSubmit").addClass("btn-info");
     $("#summonerSearchSubmit").prop("disabled", false);
     $("#summonerName").html(summoner.name);
@@ -72,6 +74,9 @@ function showSummonerInfo(data) {
     $("#searchResult").show();
     if (!championsLoaded) {
         getChampions(summoner.id);
+    } else {
+        $("#champions").show();
+        $("#masteries").hide();
     }
 }
 
@@ -111,18 +116,21 @@ function showChampions(data) {
     });
     for (var i = 0; i < champions.length; i++) {
         var championHtml = '<div class="col-md-3" style="margin-top: 5px"><input type="submit" class="champion btn-';
-        if (i % 4 == 0) {
-            championHtml += 'danger" id="' + champions[i].id + '" value="' + champions[i].name + '"/></div>';
+        switch (i % 4) {
+            case 0:
+                championHtml += "danger";
+                break;
+            case 1:
+                championHtml += "warning";
+                break;
+            case 2:
+                championHtml += "success";
+                break;
+            case 3:
+                championHtml += "primary";
+                break;
         }
-        if (i % 4 == 1) {
-            championHtml += 'warning" id="' + champions[i].id + '" value="' + champions[i].name + '"/></div>';
-        }
-        if (i % 4 == 2) {
-            championHtml += 'success" id="' + champions[i].id + '" value="' + champions[i].name + '"/></div>';
-        }
-        if (i % 4 == 3) {
-            championHtml += 'primary" id="' + champions[i].id + '" value="' + champions[i].name + '"/></div>';
-        }
+        championHtml += '" id="' + champions[i].id + '" value="' + champions[i].name + '"/></div>';
         championsHtml.push(championHtml);
     }
     $("#champions").show();
@@ -143,6 +151,9 @@ function getMasteryInfo(championId) {
         data: dataToSend,
         success: function (data) {
             showMasteries(data, championId);
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            alert(textStatus + "\n*****\n" + errorThrown);
         }
     });
 }
@@ -151,7 +162,7 @@ function showMasteries(data, championId) {
     $("#summonerSearch").hide();
     $("#champions").hide();
     $("#masteries").show();
-    if (typeof data != "undefined" && data != null) {
+    if (typeof data != "undefined" && data != null && typeof data.championId != "undefined") {
         //data = JSON.parse(data);
         $("#championName").html(getChampionName(championId));
         $("#championLevel").html(data.championLevel);
@@ -172,4 +183,22 @@ function getChampionName(championId) {
         }
     }
     return "";
+}
+
+function submitChallenge(summonerId, endDate, points) {
+    var dataToSend = {
+        SummonerId: summonerId,
+        EndDate: endDate,
+        Points: points
+    };
+    $.ajax({
+        url: $("#submitChallenge").data("url"),
+        type: "GET",
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        data: dataToSend,
+        success: function () {
+            alert();
+        }
+    });
 }

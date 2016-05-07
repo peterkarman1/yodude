@@ -78,7 +78,7 @@ namespace RiotApp.Controllers
                 }
             }
 
-            return model;
+            return string.IsNullOrWhiteSpace(model) ? "{}" : model;
         }
     }
 }
