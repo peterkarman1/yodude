@@ -1,106 +1,151 @@
 ﻿@{ ViewBag.Title = "Challenge!"; }
 
 @*<div id="getMasteryInfo" data-url="@Url.Action("GetMasteryInfo", "Riot", new { httproute = "DefaultApi" })"></div>
-<div id="getSummonerInfo" data-url="@Url.Action("GetSummonerInfo", "Riot", new { httproute = "DefaultApi" })"></div>
-<div id="getAllChamps" data-url="@Url.Action("GetAllChamps", "Riot", new { httproute = "DefaultApi" })"></div>
-<div id="getSpecificChamp" data-url="@Url.Action("GetSpecificChamp", "Riot", new { httproute = "DefaultApi" })"></div>*@
+    <div id="getSummonerInfo" data-url="@Url.Action("GetSummonerInfo", "Riot", new { httproute = "DefaultApi" })"></div>
+    <div id="getAllChamps" data-url="@Url.Action("GetAllChamps", "Riot", new { httproute = "DefaultApi" })"></div>
+    <div id="getSpecificChamp" data-url="@Url.Action("GetSpecificChamp", "Riot", new { httproute = "DefaultApi" })"></div>*@
 <div id="getMasteryInfo" data-url="@Url.Action("GetMasteryInfo", "Riot")"></div>
+<div id="getAllMasteryInfo" data-url="@Url.Action("GetAllMasteryInfo", "Riot")"></div>
 <div id="getSummonerInfo" data-url="@Url.Action("GetSummonerInfo", "Riot")"></div>
 <div id="getAllChamps" data-url="@Url.Action("GetAllChamps", "Riot")"></div>
 <div id="getSpecificChamp" data-url="@Url.Action("GetSpecificChamp", "Riot")"></div>
 <div id="submitChallenge" data-url="@Url.Action("Submit", "Challenge")"></div>
 
-<div class="row" id="summonerSearch">
-    <div class="col-md-12 col-sm-12 col-xs-12">
-        <h2>Summoner Search</h2>
-        <form id="summonerSearchForm">
-            <input type="search" id="summonerSearchText" style="color: black" />
-            <input type="submit" id="summonerSearchSubmit" value="Search" class="btn-info" />
-        </form>
-    </div>
-</div>
-<div class="row" id="searchResult" style="display: none">
-    <div style="margin-top: 10px"></div>
-    <div class="col-md-12 col-sm-12 col-xs-12">
-        <div class="row">
-            <div class="col-md-3 col-sm-4 col-xs-12">
-                <label>Summoner Name</label>
-            </div>
-            <div class="col-md-3 col-sm-4 col-xs-12">
-                <label>Summoner Level</label>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-3 col-sm-4 col-xs-12">
-                <p id="summonerName"></p>
-            </div>
-            <div class="col-md-3 col-sm-4 col-xs-12">
-                <p id="summonerLevel"></p>
+<div class="row">
+    <div id="summonerSearch">
+        <div class="col-md-6 col-sm-6 col-xs-12">
+            <div class="jumbotron">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <h2>Summoner Search</h2>
+                        <form id="summonerSearchForm">
+                            <div class="row">
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input type="search" id="summonerSearchText" style="color: black" class="form-control" />
+                                </div>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input type="submit" id="summonerSearchSubmit" value="Search" class="btn-info form-control" />
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<div class="row" id="champions" style="display: none">
-    <div style="margin-top: 10px"></div>
-    <div class="col-md-12 col-sm-12 col-xs-12">
-        <h2>Select a Champion</h2>
-    </div>
-    <div id="championsList"></div>
-</div>
-<div class="row" id="masteries" style="display: none">
-    <div style="margin-top: 10px"></div>
-    <div class="col-md-12 col-sm-12 col-xs-12">
-        <h2>Champion Mastery Info</h2>
-        <div class="row">
-            <div class="col-md-3 col-sm-3 col-xs-12">
-                <label>Champion</label>
-                <p id="championName"></p>
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        <div class="jumbotron">
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <h2>View My Challenges</h2>
+                </div>
             </div>
-            <div class="col-md-3 col-sm-3 col-xs-12">
-                <label>Mastery Level</label>
-                <p id="championLevel"></p>
-            </div>
-            <div class="col-md-3 col-sm-3 col-xs-12">
-                <label>Total Mastery Points</label>
-                <p id="championPoints"></p>
-            </div>
-            <div class="col-md-3 col-sm-3 col-xs-12">
-                <label>Last Played Date</label>
-                <p id="lastPlayTime"></p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-3 col-sm-3 col-xs-12">
-                <input type="submit" id="challengeButton" value="Challenge!" class="btn-warning" />
-            </div>
-            <div class="col-md-3 col-sm-3 col-xs-12">
-                <input type="submit" id="backToChampionsList" value="Back To Champions List" class="btn-primary"/>
+            <div class="row">
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    <input type="submit" id="viewChallenges" value="View" class="btn-primary form-control" />
+                </div>
             </div>
         </div>
     </div>
 </div>
-<div class="row" id="challenge" style="display: none">
-    <div style="margin-top: 10px"></div>
-    <div class="col-md-12 col-sm-12 col-xs-12">
-        <h2 id="challengeSummonerName"></h2>
-        <div class="row">
-            <div class="col-md-3 col-sm-3 col-xs-12">
-                <label>Challenge End Date</label>
-                <input type="text" class="datepicker" id="challengeEndDate" style="color: black" />
-            </div>
-            <div class="col-md-3 col-sm-3 col-xs-12">
-                <label>Challenge Champion Mastery Points</label>
-                <input type="text" id="challengePoints" style="color: black" value="5000"/>
-            </div>
-        </div>
+<div class="jumbotron" style="display: none" id="searchAndChallenge">
+    <div class="row" id="searchResult" style="display: none">
         <div style="margin-top: 10px"></div>
-        <div class="row">
-            <div class="col-md-3 col-sm-3 col-xs-12">
-                <input type="submit" id="challengeConfirmButton" value="" class="btn-danger" />
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="row">
+                <div class="col-md-3 col-sm-4 col-xs-12">
+                    <h4>Summoner Name</h4>
+                </div>
+                <div class="col-md-3 col-sm-4 col-xs-12">
+                    <h4>Summoner Level</h4>
+                </div>
+                <div class="col-md-3 col-sm-4 col-xs-12">
+                    <h4>Best Champion</h4>
+                </div>
+                <div class="col-md-3 col-sm-4 col-xs-12">
+                    <h4>Total Mastery Points Earned</h4>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 col-sm-4 col-xs-12">
+                    <p id="summonerName"></p>
+                </div>
+                <div class="col-md-3 col-sm-4 col-xs-12">
+                    <p id="summonerLevel"></p>
+                </div>
+                <div class="col-md-3 col-sm-4 col-xs-12">
+                    <p id="bestChampion"></p>
+                </div>
+                <div class="col-md-3 col-sm-4 col-xs-12">
+                    <p id="totalMasteryPoints"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" id="champions" style="display: none">
+        <div style="margin-top: 10px"></div>
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <h2>Select a Champion</h2>
+        </div>
+        <div id="championsList"></div>
+    </div>
+
+    <div class="row" id="masteries" style="display: none">
+        <div style="margin-top: 10px"></div>
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <h2>Champion Mastery Info</h2>
+            <div class="row">
+                <div class="col-md-3 col-sm-3 col-xs-12">
+                    <h4>Champion</h4>
+                    <p id="championName"></p>
+                </div>
+                <div class="col-md-3 col-sm-3 col-xs-12">
+                    <h4>Mastery Level</h4>
+                    <p id="championLevel"></p>
+                </div>
+                <div class="col-md-3 col-sm-3 col-xs-12">
+                    <h4>Mastery Points</h4>
+                    <p id="championPoints"></p>
+                </div>
+                <div class="col-md-3 col-sm-3 col-xs-12">
+                    <h4>Last Played Date</h4>
+                    <p id="lastPlayTime"></p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 col-sm-3 col-xs-12">
+                    <input type="submit" id="challengeButton" value="Challenge!" class="btn-warning form-control" />
+                </div>
+                <div class="col-md-3 col-sm-3 col-xs-12">
+                    <input type="submit" id="backToChampionsList" value="Back To Champions" class="btn-primary form-control" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" id="challenge" style="display: none">
+        <div style="margin-top: 10px"></div>
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <h2 id="challengeSummonerName"></h2>
+            <div class="row">
+                <div class="col-md-3 col-sm-3 col-xs-12">
+                    <h4>Challenge End Date</h4>
+                    <input type="text" class="datepicker form-control" id="challengeEndDate" style="color: black" />
+                </div>
+                <div class="col-md-3 col-sm-3 col-xs-12">
+                    <h4>Challenge Champion Mastery Points</h4>
+                    <input type="text" id="challengePoints" style="color: black" value="5000" class="form-control" />
+                </div>
+            </div>
+            <div style="margin-top: 10px"></div>
+            <div class="row">
+                <div class="col-md-3 col-sm-3 col-xs-12">
+                    <input type="submit" id="challengeConfirmButton" value="" class="btn-danger form-control" />
+                </div>
             </div>
         </div>
     </div>
 </div>
+
 
 @section scripts {
     <script src="~/Scripts/challenge.js"></script>
