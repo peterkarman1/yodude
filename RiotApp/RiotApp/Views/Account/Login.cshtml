@@ -6,7 +6,7 @@
 
 <h2>@ViewBag.Title.</h2>
 <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-6 jumbotron" style="background: rgba(200, 54, 54, 0.7);">
         <section id="loginForm">
                 <h4>Log in with existing account.</h4>
                 <hr />
@@ -40,7 +40,7 @@
                 </div>
         </section>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-6 jumbotron" style="background: rgba(200, 54, 54, 0.7);">
         <section id="socialLoginForm">
 
             <h4>Create a new account.</h4>
@@ -71,7 +71,7 @@
                 </div>
             </div>
             <div class="form-group col-md-12">
-            <div class="col-md-12 text-warning" style="display:none" id="existsAlready">Summoner with that name already exists</div>
+            <div class="col-md-12 text-primary" style="display:none" id="existsAlready">Summoner with that name already exists</div>
                 <div class="col-md-offset-2 col-md-10">
                     <input type="submit" class="btn btn-default" value="Register" id="registerbtn" />
                 </div>
@@ -79,16 +79,21 @@
         </section>
     </div>
 </div>
+<script>
+    $(document).ready(function() {
+        $('body').css({ "background-image": 'url(' + '@Url.Content("~/Content/Images/600528.png")' + ')' })
+    });
+    $("#registerbtn").click(function() {
+        if ($("#summonertext").val().toLowerCase() == "thepetek") {
+            $("#existsAlready").show();
+        } else {
+            window.location.href = "@Url.Action("Index", "Challenge")";
+        }
+    });
 
+</script>
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
-    <script>
-        $("#registerbtn").click(function () {
-            if ($("#summonertext").val().toLowerCase() == "thepetek") {
-                $("#existsAlready").show();
-            } else {
-                window.location.href="@Url.Action("Index","Challenge")"
-            }
-        })
-    </script>
+
+
 }
