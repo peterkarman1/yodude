@@ -50,7 +50,7 @@ namespace RiotApp.Controllers
             return new ChallengeSubmission
             {
                 EndDate = id == 1 ? DateTime.Now : DateTime.Today.AddDays(1),
-                Points = id == 1 ? 4587 : 2300,
+                ChampionId = id == 1 ? 12 : 32,
                 SummonerId = 1
             };
         }
@@ -60,7 +60,7 @@ namespace RiotApp.Controllers
             return new ChallengeSubmission
             {
                 EndDate = id == 1 ? DateTime.Now : DateTime.Today.AddDays(1),
-                Points = id == 1 ? 5000 : 2345,
+                ChampionId = id == 1 ? 12 : 32,
                 SummonerId = 1
             };
         }

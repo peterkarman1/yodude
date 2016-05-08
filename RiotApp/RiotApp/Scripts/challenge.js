@@ -272,7 +272,7 @@ function showChallenges(challenges) {
                     challenges.challenges[i].SummonerId +
                 "</p></div>" +
                 "<div class='col-md-3 col-sm-3 col-xs-12'><p>" +
-                    challenges.challenges[i].Points +
+                    challenges.challenges[i].ChampionId +
                 "</p></div>" +
                 "<div class='col-md-3 col-sm-3 col-xs-12'><p>" +
                     $.datepicker.formatDate("mm/dd/yy", new Date(parseInt(challenges.challenges[i].EndDate.substr(6)))) +
@@ -287,12 +287,12 @@ function showChallenges(challenges) {
 
 //SUBMIT
 
-function submitChallenge(summonerId, endDate, points) {
+function submitChallenge(summonerId, endDate, championId) {
     alert("TODO");
     //var dataToSend = {
     //    SummonerId: summonerId,
     //    EndDate: endDate,
-    //    Points: points
+    //    ChampionId: championId
     //};
     //$.ajax({
     //    url: $("#submitChallenge").data("url"),
