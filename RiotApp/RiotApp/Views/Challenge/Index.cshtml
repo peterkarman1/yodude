@@ -10,6 +10,7 @@
 <div id="getAllChamps" data-url="@Url.Action("GetAllChamps", "Riot")"></div>
 <div id="getSpecificChamp" data-url="@Url.Action("GetSpecificChamp", "Riot")"></div>
 <div id="submitChallenge" data-url="@Url.Action("Submit", "Challenge")"></div>
+<div id="getChallenges" data-url="@Url.Action("GetChallenges", "Challenge")"></div>
 
 <div class="row">
     <div id="summonerSearch">
@@ -42,7 +43,7 @@
             </div>
             <div class="row">
                 <div class="col-md-6 col-sm-6 col-xs-12">
-                    <input type="submit" id="viewChallenges" value="View" class="btn-primary form-control" />
+                    <input type="submit" id="viewChallenges" value="View" class="btn-success form-control" />
                 </div>
             </div>
         </div>
@@ -52,6 +53,7 @@
     <div class="row" id="searchResult" style="display: none">
         <div style="margin-top: 10px"></div>
         <div class="col-md-12 col-sm-12 col-xs-12">
+            <h2>Summoner Info</h2>
             <div class="row">
                 <div class="col-md-3 col-sm-4 col-xs-12">
                     <h4>Summoner Name</h4>
@@ -89,7 +91,6 @@
         </div>
         <div id="championsList"></div>
     </div>
-
     <div class="row" id="masteries" style="display: none">
         <div style="margin-top: 10px"></div>
         <div class="col-md-12 col-sm-12 col-xs-12">
@@ -114,10 +115,10 @@
             </div>
             <div class="row">
                 <div class="col-md-3 col-sm-3 col-xs-12">
-                    <input type="submit" id="challengeButton" value="Challenge!" class="btn-warning form-control" />
+                    <input type="submit" id="challengeButton" value="Challenge!" class="btn-warning form-control"/>
                 </div>
                 <div class="col-md-3 col-sm-3 col-xs-12">
-                    <input type="submit" id="backToChampionsList" value="Back To Champions" class="btn-primary form-control" />
+                    <input type="submit" id="backToChampionsList1" value="Back To Champions" class="btn-primary form-control"/>
                 </div>
             </div>
         </div>
@@ -129,19 +130,42 @@
             <div class="row">
                 <div class="col-md-3 col-sm-3 col-xs-12">
                     <h4>End Date</h4>
-                    <input type="text" class="datepicker form-control" id="challengeEndDate" style="color: black" value="@DateTime.Now.AddDays(3).ToShortDateString()" />
+                    <input type="text" class="datepicker form-control" id="challengeEndDate" style="color: black" value="@DateTime.Now.AddDays(3).ToShortDateString()"/>
                 </div>
                 <div class="col-md-3 col-sm-3 col-xs-12">
                     <h4>Mastery Points</h4>
-                    <input type="text" id="challengePoints" style="color: black" value="2500" class="form-control" />
+                    <input type="text" id="challengePoints" style="color: black" value="2500" class="form-control"/>
                 </div>
             </div>
             <div style="margin-top: 10px"></div>
             <div class="row">
                 <div class="col-md-3 col-sm-3 col-xs-12">
-                    <input type="submit" id="challengeConfirmButton" value="" class="btn-danger form-control" />
+                    <input type="submit" id="challengeConfirmButton" value="" class="btn-danger form-control"/>
+                </div>
+                <div class="col-md-3 col-sm-3 col-xs-12">
+                    <input type="submit" id="backToChampionsList2" value="Back To Champions" class="btn-primary form-control"/>
                 </div>
             </div>
+        </div>
+    </div>
+</div>
+<div id="viewAllChallenges" class="jumbotron" style="display: none">
+    <div class="row">
+        <div style="margin-top: 10px"></div>
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <h2>My Challenges</h2>
+            <div class="row">
+                <div class="col-md-3 col-sm-3 col-xs-12">
+                    <h4>Summoner Name</h4>
+                </div>
+                <div class="col-md-3 col-sm-3 col-xs-12">
+                    <h4>Points</h4>
+                </div>
+                <div class="col-md-3 col-sm-3 col-xs-12">
+                    <h4>End Date</h4>
+                </div>
+            </div>
+            <div id="challengesList"></div>
         </div>
     </div>
 </div>

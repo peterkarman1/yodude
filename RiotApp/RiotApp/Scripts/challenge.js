@@ -13,6 +13,7 @@ $(document).ready(function () {
     $("#summonerSearchSubmit").on("click", function (e) {
         e.preventDefault();
         $("#searchAndChallenge").hide();
+        $("#viewAllChallenges").hide();
         getSummonerInfo($("#summonerSearchText").val());
     });
 
@@ -20,10 +21,19 @@ $(document).ready(function () {
         e.preventDefault();
         $("#champions").hide();
         $("#challengeButton").show();
+        $("#backToChampionsList1").show();
         getMasteryInfo($(this).prop("id"));
     });
-    
-    $("#backToChampionsList").on("click", function (e) {
+
+    $("#backToChampionsList1").on("click", function (e) {
+        e.preventDefault();
+        $("#summonerSearch").show();
+        $("#champions").show();
+        $("#masteries").hide();
+        $("#challenge").hide();
+    });
+
+    $("#backToChampionsList2").on("click", function (e) {
         e.preventDefault();
         $("#summonerSearch").show();
         $("#champions").show();
@@ -40,6 +50,11 @@ $(document).ready(function () {
         var endDate = $("#challengeEndDate").val();
         var points = $("#challengePoints").val();
         submitChallenge(summoner.id, endDate, points);
+    });
+
+    $("#viewChallenges").on("click", function (e) {
+        e.preventDefault();
+        getChallanges(1);
     });
 });
 
@@ -122,6 +137,25 @@ function getChampionName(championId) {
         }
     }
     return "";
+}
+
+function getChallanges(userId) {
+    var dataToSend = {
+        userId: userId
+    };
+    $.ajax({
+        url: $("#getChallenges").data("url"),
+        type: "GET",
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        data: dataToSend,
+        success: function (data) {
+            showChallenges(data);
+        },
+        error: function (textStatus, errorThrown) {
+            alert(textStatus + "\n*****\n" + errorThrown);
+        }
+    });
 }
 
 //SHOW
@@ -208,7 +242,7 @@ function showMasteries(data, championId) {
         $("#championName").html(getChampionName(championId));
         $("#championLevel").html(data.championLevel);
         $("#championPoints").html(data.championPoints);
-        $("#lastPlayTime").html(new Date(data.lastPlayTime).toString());
+        $("#lastPlayTime").html($.datepicker.formatDate("mm/dd/yy", new Date(data.lastPlayTime)));
     } else {
         $("#championName").html(getChampionName(championId));
         $("#championLevel").html("0");
@@ -223,25 +257,51 @@ function showChallengeForm() {
     $("#challengeSummonerName").html("Challenge " + summoner.name + " on " + championName + "!");
     $("#challengeConfirmButton").prop("value", "Challenge " + summoner.name + "!");
     $("#challengeButton").hide();
+    $("#backToChampionsList1").hide();
     $("#challenge").show();
+}
+
+function showChallenges(challenges) {
+    $("#viewAllChallenges").show();
+    $("#searchAndChallenge").hide();
+    var challengesHtml = "";
+    for (var i = 0; i < challenges.challenges.length; i++) {
+        challengesHtml +=
+            "<div class='row'>" +
+                "<div class='col-md-3 col-sm-3 col-xs-12'><p>" +
+                    challenges.challenges[i].SummonerId +
+                "</p></div>" +
+                "<div class='col-md-3 col-sm-3 col-xs-12'><p>" +
+                    challenges.challenges[i].Points +
+                "</p></div>" +
+                "<div class='col-md-3 col-sm-3 col-xs-12'><p>" +
+                    $.datepicker.formatDate("mm/dd/yy", new Date(parseInt(challenges.challenges[i].EndDate.substr(6)))) +
+                "</p></div>" +
+                "<div class='col-md-3 col-sm-3 col-xs-12'><input class='btn-primary form-control' value='View Progress' type='submit' id='" +
+                    challenges.challenges[i].ChallengeId +
+                "'/></div>" +
+            "</div>";
+    }
+    $("#challengesList").html(challengesHtml);
 }
 
 //SUBMIT
 
 function submitChallenge(summonerId, endDate, points) {
-    var dataToSend = {
-        SummonerId: summonerId,
-        EndDate: endDate,
-        Points: points
-    };
-    $.ajax({
-        url: $("#submitChallenge").data("url"),
-        type: "GET",
-        dataType: "json",
-        contentType: "application/json; charset=utf-8",
-        data: dataToSend,
-        success: function () {
-            alert();
-        }
-    });
+    alert("TODO");
+    //var dataToSend = {
+    //    SummonerId: summonerId,
+    //    EndDate: endDate,
+    //    Points: points
+    //};
+    //$.ajax({
+    //    url: $("#submitChallenge").data("url"),
+    //    type: "GET",
+    //    dataType: "json",
+    //    contentType: "application/json; charset=utf-8",
+    //    data: dataToSend,
+    //    success: function () {
+    //        alert();
+    //    }
+    //});
 }
