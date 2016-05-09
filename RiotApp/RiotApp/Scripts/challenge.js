@@ -2,9 +2,11 @@
 var summoner;
 var champions;
 var championsLoaded;
+var loginSummonerId;
 
 $(document).ready(function () {
     championsLoaded = false;
+    loginSummonerId = $("#loginSummonerId").data("id");
 
     $(".datepicker").datepicker({
         minDate: new Date()
@@ -56,6 +58,11 @@ $(document).ready(function () {
         e.preventDefault();
         getChallanges(1);
     });
+
+    //$("body").on("click", ".challenge", function (e) {
+    //    e.preventDefault();
+    //    getChallengeProgress($(this).prop("id"));
+    //});
 });
 
 //GET
@@ -157,6 +164,25 @@ function getChallanges(userId) {
         }
     });
 }
+
+//function getChallengeProgress(challengeId) {
+//    var dataToSend = {
+//        challengeId: 1
+//    };
+//    $.ajax({
+//        url: $("#getChallengeProgress").data("url"),
+//        type: "GET",
+//        dataType: "json",
+//        contentType: "application/json; charset=utf-8",
+//        data: dataToSend,
+//        success: function (data) {
+//            showChallengeProgress(data, challengeId);
+//        },
+//        error: function (jqXHR, textStatus, errorThrown) {
+//            alert(textStatus + "\n*****\n" + errorThrown);
+//        }
+//    });
+//}
 
 //SHOW
 
@@ -266,24 +292,123 @@ function showChallenges(challenges) {
     $("#searchAndChallenge").hide();
     var challengesHtml = "";
     for (var i = 0; i < challenges.challenges.length; i++) {
+        var opponentName;
+        var isChallenger;
+        if (challenges.challenges[i].ChallengerId == loginSummonerId) {
+            opponentName = challenges.challenges[i].ChallengeeName;
+            isChallenger = true;
+        }
+        else {
+            opponentName = challenges.challenges[i].ChallengerName;
+            isChallenger = false;
+        }
+        var challengerPointsEarned = challenges.challenges[i].ChallengerCurrentPoints - challenges.challenges[i].ChallengerStartPoints;
+        var challengeePointsEarned = challenges.challenges[i].ChallengeeCurrentPoints - challenges.challenges[i].ChallengeeStartPoints;
+        var status;
+        var endDate = new Date(parseInt(challenges.challenges[i].EndDate.substr(6)));
+        var startDate = new Date(parseInt(challenges.challenges[i].StartDate.substr(6)));
+        var rematchHtml;
+        if (endDate > new Date()) {
+            status = "Ongoing";
+            rematchHtml = "";
+        } else {
+            if (challengerPointsEarned > challengeePointsEarned) {
+                status = isChallenger ? "Win" : "Loss";
+            } else if (challengerPointsEarned < challengeePointsEarned) {
+                status = isChallenger ? "Loss" : "Win";
+            } else {
+                status = "Tie";
+            }
+            rematchHtml = "<input class='btn-danger form-control challenge' value='Rematch!' type='submit' id='" + challenges.challenges[i].ChallengeId + "'/>";
+        }
+        var yourPointsEarned;
+        var opponentsPointsEarned;
+        if (isChallenger) {
+            yourPointsEarned = challengerPointsEarned;
+            opponentsPointsEarned = challengeePointsEarned;
+        } else {
+            yourPointsEarned = challengeePointsEarned;
+            opponentsPointsEarned = challengerPointsEarned;
+        }
         challengesHtml +=
             "<div class='row'>" +
-                "<div class='col-md-3 col-sm-3 col-xs-12'><p>" +
-                    challenges.challenges[i].SummonerId +
-                "</p></div>" +
-                "<div class='col-md-3 col-sm-3 col-xs-12'><p>" +
-                    challenges.challenges[i].ChampionId +
-                "</p></div>" +
-                "<div class='col-md-3 col-sm-3 col-xs-12'><p>" +
-                    $.datepicker.formatDate("mm/dd/yy", new Date(parseInt(challenges.challenges[i].EndDate.substr(6)))) +
-                "</p></div>" +
-                "<div class='col-md-3 col-sm-3 col-xs-12'><input class='btn-primary form-control' value='View Progress' type='submit' id='" +
-                    challenges.challenges[i].ChallengeId +
-                "'/></div>" +
+                "<div class='col-md-6'>" +
+                    "<div class='row'>" +
+                        "<div class='col-md-3'><p>" +
+                            opponentName +
+                        "</p></div>" +
+                        "<div class='col-md-3'><p>" +
+                            challenges.challenges[i].ChampionName +
+                        "</p></div>" +
+                        "<div class='col-md-3'><p>" +
+                            status +
+                        "</p></div>" +
+                        "<div class='col-md-3'><p>" +
+                            $.datepicker.formatDate("mm/dd/yy", startDate) +
+                        "</p></div>" +
+                    "</div>" +
+                "</div><div class='col-md-6'>" +
+                    "<div class='row'>" +
+                        "<div class='col-md-3'><p>" +
+                            $.datepicker.formatDate("mm/dd/yy", endDate) +
+                        "</p></div>" +
+                        "<div class='col-md-3'><p>" +
+                            yourPointsEarned +
+                        "</p></div>" +
+                        "<div class='col-md-3'><p>" +
+                            opponentsPointsEarned +
+                        "</p></div>" +
+                        "<div class='col-md-3'>" + rematchHtml + "</div>" +
+                    "</div>" +
+                "</div>" +
             "</div>";
     }
     $("#challengesList").html(challengesHtml);
 }
+
+//function showChallengeProgress(data, challengeId) {
+//    if (typeof data != "undefined" && data != null && typeof data.championId != "undefined") {
+//        var row = $("#" + challengeId).closest(".row");
+//        var headerHtml = getChallengeProgressHeaderHtml();
+//        row.after(
+//            "<div id='" + challengeId + "Progress'>" +
+//                headerHtml +
+//                "<div class='row'>" +
+//                    "<div class='col-md-3 col-sm-3 col-xs-12'>" +
+//                        "" +
+//                    "</div>" +
+//                    "<div class='col-md-3 col-sm-3 col-xs-12'>" +
+//                        "" +
+//                    "</div>" +
+//                    "<div class='col-md-3 col-sm-3 col-xs-12'>" +
+//                        "" +
+//                    "</div>" +
+//                    "<div class='col-md-3 col-sm-3 col-xs-12'>" +
+//                        "" +
+//                    "</div>" +
+//                "</div>" +
+//            "</div>");
+//    } else {
+
+//    }
+//}
+
+//function getChallengeProgressHeaderHtml() {
+//    return "<div class='row'>" +
+//                "<div class='col-md-3 col-sm-3 col-xs-12'>" +
+//                    "<h4>Status</h4>" +
+//                "</div>" +
+//                "<div class='col-md-3 col-sm-3 col-xs-12'>" +
+//                    "<h4>Your Points Earned</h4>" +
+//                "</div>" +
+//                "<div class='col-md-3 col-sm-3 col-xs-12'>" +
+//                    "<h4>Opponent's Points Earned</h4>" +
+//                "</div>" +
+//                "<div class='col-md-3 col-sm-3 col-xs-12'>" +
+//                    "<h4>Hide Progress</h4>" +
+//                "</div>" +
+//            "</div>";
+//}
 
 //SUBMIT
 

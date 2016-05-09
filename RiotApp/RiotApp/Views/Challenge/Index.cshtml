@@ -11,6 +11,7 @@
 <div id="getSpecificChamp" data-url="@Url.Action("GetSpecificChamp", "Riot")"></div>
 <div id="submitChallenge" data-url="@Url.Action("Submit", "Challenge")"></div>
 <div id="getChallenges" data-url="@Url.Action("GetChallenges", "Challenge")"></div>
+<div id="loginSummonerId" data-id="19320017"></div>
 
 <div class="row">
     <div id="summonerSearch">
@@ -132,10 +133,10 @@
                     <h4>End Date</h4>
                     <input type="text" class="datepicker form-control" id="challengeEndDate" style="color: black" value="@DateTime.Now.AddDays(3).ToShortDateString()"/>
                 </div>
-                <div class="col-md-3 col-sm-3 col-xs-12">
+                @*<div class="col-md-3 col-sm-3 col-xs-12">
                     <h4>Mastery Points</h4>
                     <input type="text" id="challengePoints" style="color: black" value="2500" class="form-control"/>
-                </div>
+                </div>*@
             </div>
             <div style="margin-top: 10px"></div>
             <div class="row">
@@ -155,14 +156,37 @@
         <div class="col-md-12 col-sm-12 col-xs-12">
             <h2>My Challenges</h2>
             <div class="row">
-                <div class="col-md-3 col-sm-3 col-xs-12">
-                    <h4>Summoner Name</h4>
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <h4>Opponent</h4>
+                        </div>
+                        <div class="col-md-3">
+                            <h4>Champion</h4>
+                        </div>
+                        <div class="col-md-3">
+                            <h4>Status</h4>
+                        </div>
+                        <div class="col-md-3">
+                            <h4>Start Date</h4>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-md-3 col-sm-3 col-xs-12">
-                    <h4>Champion</h4>
-                </div>
-                <div class="col-md-3 col-sm-3 col-xs-12">
-                    <h4>End Date</h4>
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <h4>End Date</h4>
+                        </div>
+                        <div class="col-md-3">
+                            <h4>Your Points Earned</h4>
+                        </div>
+                        <div class="col-md-3">
+                            <h4>Opponent's Points Earned</h4>
+                        </div>
+                        <div class="col-md-3">
+                            <h4>Rematch</h4>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div id="challengesList"></div>
