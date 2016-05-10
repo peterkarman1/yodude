@@ -3,6 +3,7 @@ Kolt 45 Mastery Challenge
 Kolt 45 Mastery Challenge is an app that allows you to battle your friends for ultimate bragging rights. Choose a champion to race to see who can get the most amount of points in a given amount of time. Find a summoner to challenge, send them a challenge and when they accept, you’re off to the fight. Achievements are awarded to the victor. This app is currently in concept stages
  <br/>
 Landing Page
+<img src="http://s32.postimg.org/maqhagsid/Landing.png"/>
  <br/>
 You’ll land on the site and be immediately fired up by everyone’s least favorite champ. Log in and begin a challenge
   <br/>
