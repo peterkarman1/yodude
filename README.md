@@ -13,7 +13,7 @@ Logins can be tied to one summoner. If a summoner is already linked to an accoun
   
 
 Challenge Page
- 
+ </br>
 
 
 When you get to the challenge page, you can search for a summoner to challenge or view any current challenges that you may be participating in. 
