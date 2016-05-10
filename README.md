@@ -36,5 +36,5 @@ Once you choose a champion, click challenge to challenge your opponent.
 
 When you challenge, set the end date. Whoever earns the most points in the time arranged, wins and gets all the bragging rights. 
   <br/>
-<img src="http://s32.postimg.org/sn6jn1tg5/5_View_Challenges.png"/>
+<img src="http://s32.postimg.org/d7kjn7x3p/5_View_Challenges.png"/>
 Finally you can view all your current challenges and your historic challenges and see the results.
